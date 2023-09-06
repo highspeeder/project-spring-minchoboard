@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    driver-class-name: com.postgresql.cj.jdbc.Driver
+    url: jdbc:postgresql://localhost:5432/blog?serverTimezone=Asia/Seoul
+    username: cos
+    password: cos1234
