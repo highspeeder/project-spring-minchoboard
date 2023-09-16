@@ -21,6 +21,10 @@ public class PrincipalDetail implements UserDetails{
         this.user = user;
     }
 
+    public int getUserId() {
+        return user.getId();
+    }
+
     //계정이 갖고 있는 권한 목록을 리턴한다.
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
