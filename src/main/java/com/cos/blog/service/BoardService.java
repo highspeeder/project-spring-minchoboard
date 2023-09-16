@@ -10,7 +10,6 @@ import com.cos.blog.model.Board;
 import com.cos.blog.model.User;
 import com.cos.blog.repository.BoardRepository;
 
-
 @Service
 public class BoardService {
     @Autowired
@@ -24,19 +23,30 @@ public class BoardService {
     }
 
     @Transactional(readOnly = true)
-    public Page<Board> boardList(Pageable pageable){
+    public Page<Board> boardList(Pageable pageable) {
         return boardRepository.findAll(pageable);
     }
 
     @Transactional(readOnly = true)
-    public Board boardDetail(int id){
-        return boardRepository.findById(id).orElseThrow(()->{ 
-                    return new IllegalArgumentException("글 상세보기 실패");
-                });    
+    public Board boardDetail(int id) {
+        return boardRepository.findById(id).orElseThrow(() -> {
+            return new IllegalArgumentException("글 상세보기 실패");
+        });
     }
 
     @Transactional
-    public void boardDelete(int id){
+    public void boardDelete(int id) {
         boardRepository.deleteById(id);
+    }
+
+    // 메서드 종료시 트랜잭션이 종료 된다.
+    // 이때 더티체킹이 되면서 자동 업데이트가 된다.(DB flush)
+    @Transactional
+    public void boardUpdate(int id, Board requestBoard) {
+        Board board = boardRepository.findById(id).orElseThrow(() -> {
+            return new IllegalArgumentException("글 찾기 실패");
+        });
+        board.setTitle(requestBoard.getTitle());
+        board.setContent(requestBoard.getContent());
     }
 }
