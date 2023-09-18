@@ -2,3 +2,7 @@ body {
     background-color: #1AAFBC !important;
     margin: 0;
 }
+
+input[readonly]{
+    background-color:gainsboro;
+  }
