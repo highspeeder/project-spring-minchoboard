@@ -11,18 +11,16 @@
       <!-- form날릴 때, csrf토큰을 같이 날려준다. -->
       <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
       <div class="mb-3 mt-3">
-        <label for="username" class="form-label">Username:</label>
+        <label for="username" class="form-label text-white">Username:</label>
         <input type="username" class="form-control" id="username" placeholder="Enter username" name="username">
       </div>
       <div class="mb-3">
-        <label for="password" class="form-label">Password:</label>
+        <label for="password" class="form-label text-white">Password:</label>
         <input type="password" class="form-control" id="password" placeholder="Enter password" name="password">
       </div>
-      <!-- <div class="form-check mb-3">
-          <label class="form-check-label">
-            <input class="form-check-input" type="checkbox" name="remember"> Remember me
-          </label>
-        </div> -->
+      <div class="message" th:if="${hasMessage == true}" th:text="${message}"
+        style="color: orangered; margin-bottom: 10px; background-color: gainsboro;">
+      </div>
       <button id="btn-login" class="btn btn-primary">로그인</button>
       <a th:href="@{/oauth2/authorization/kakao}">
         <img src="/image/kakao_login_button.png" height="38px">

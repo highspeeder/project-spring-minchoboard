@@ -8,11 +8,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import com.cos.blog.handler.LoginFailHandler;
 import com.cos.blog.service.OAuth2UserService;
 
 @Configuration // IoC
@@ -45,12 +45,12 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         // /auth라는 uri로 들어온 경우 통과(permitAll:어떠한 보안 요구 없이 요청을 허용)
                         .requestMatchers("/", "/auth/**", "/user/**", "/js/**", "/css/**", "/image/**", "/favicon.ico",
-                                "/oauth/**")
+                                "/oauth2/**")
                         .permitAll()
                         // 위에 요청이 아닌 다른 모든 요청은 인증이 되어야 통과할 수 있다.
                         .anyRequest().authenticated())
                 .oauth2Login(o -> o
-                    .defaultSuccessUrl("/", true)
+                    .defaultSuccessUrl("/")
                     .userInfoEndpoint(userInfo -> userInfo
 			            .userService(this.oAuth2UserService)
                     )
@@ -62,7 +62,8 @@ public class SecurityConfig {
                         // 스프링 시큐리티가 해당 url로 요청오는 로그인을 가로채서 대신 로그인 해준다.
                         .loginProcessingUrl("/auth/loginProc")
                         // 정상적으로 로그인이 되면 해당 url로 이동
-                        .defaultSuccessUrl("/", true))
+                        .defaultSuccessUrl("/")
+                        .failureHandler(new LoginFailHandler()))
                 // csrf토큰을 사용하지 않으면 기본적으로 /logout url으로 로그아웃이 되지만
                 // csrf토큰을 사용한다면 아래와 같이 설정을 해준다.
                 .logout((logout) -> logout
