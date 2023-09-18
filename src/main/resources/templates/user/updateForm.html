@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="~{layout/head :: head}"></head>
+
+<body>
+    <nav th:replace="~{layout/nav :: nav}"></nav>
+
+    <div class="container-fluid mt-3" style="min-height: 70vh;">
+        <form>
+            <input type="hidden" id="id" th:value="${#authentication.principal.id}">
+            <div class="mb-3 mt-3">
+                <label for="username" class="form-label">Username:</label>
+                <input type="username" class="form-control" id="username" placeholder="Enter username" name="username"
+                    readonly th:value="${#authentication.principal.username}">
+            </div>
+            <div class="mb-3" th:if="${#authentication.principal.isOAuthUser == false}">
+                <label for="password" class="form-label">Password:</label>
+                <input type="password" class="form-control" id="password" placeholder="Enter password" name="password">
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter email" name="email"
+                    th:attr="readonly=${#authentication.principal.isOAuthUser}"
+                    th:value="${#authentication.principal.email}">
+            </div>
+        </form>
+        <button id="btn-update" class="btn btn-primary">수정</button>
+    </div>
+
+    <div th:replace="~{layout/footer :: footer}"></div>
+    <script src="/js/user.js"></script>
+</body>
+
+
+</html>

@@ -3,12 +3,12 @@ package com.cos.blog.controller.api;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cos.blog.config.auth.PrincipalDetail;
-import com.cos.blog.dto.ResponseDto;
 import com.cos.blog.model.Board;
 import com.cos.blog.service.BoardService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,23 +24,22 @@ public class BoardApiController {
 
     // 글쓰기
     @PostMapping(value = "/api/board")
-    public ResponseDto<Integer> save(@RequestBody Board board, @AuthenticationPrincipal PrincipalDetail principal) {
+    public ResponseEntity<Integer> save(@RequestBody Board board, @AuthenticationPrincipal PrincipalDetail principal) {
         boardService.write(board, principal.getUser());
-
-        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+        return new ResponseEntity<>(1, HttpStatus.OK); 
     }
 
     //글 삭제하기
     @DeleteMapping("/api/board/{id}")
-    public ResponseDto<Integer> deleteById(@PathVariable int id) {
+    public ResponseEntity<Integer> deleteById(@PathVariable int id) {
         boardService.boardDelete(id);
-        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+        return new ResponseEntity<>(1, HttpStatus.OK);      
     }
 
     //글 수정하기
     @PutMapping("/api/board/{id}")
-    public ResponseDto<Integer> update(@PathVariable int id, @RequestBody Board board){
+    public ResponseEntity<Integer> update(@PathVariable int id, @RequestBody Board board){
         boardService.boardUpdate(id, board);
-        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+        return new ResponseEntity<>(1, HttpStatus.OK); 
     }
 }

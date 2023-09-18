@@ -31,12 +31,12 @@ let index = {
             beforeSend: function (xhr) {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
                 xhr.setRequestHeader(header, token);
             },
-        }).done(function (resp) {
-            alert("글쓰기가 완료 되었습니다.");
-            location.href = "/";
         }).fail(function (error) {
             alert("글쓰기가 실패 하였습니다.");
             alert(error);
+        }).done(function (resp) {
+            alert("글쓰기가 완료 되었습니다.");
+            location.href = "/";
         })
     },
 

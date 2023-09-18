@@ -56,4 +56,7 @@ public class User {
     @CreationTimestamp //insert될 때 자동으로 현재시간 입력.
     //@Column(name = "createDate", columnDefinition = "timestamp without time zone")
     private Timestamp createDate;
+
+    @Column(nullable = false)
+    private Boolean isOAuthUser;
 }

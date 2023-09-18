@@ -8,7 +8,7 @@
 
   <div class="container-fluid mt-3" style="min-height: 70vh;">
     <form action="/auth/loginProc" method="post">
-      <!-- 로그인할 때, csrf토큰을 같이 날려준다. -->
+      <!-- form날릴 때, csrf토큰을 같이 날려준다. -->
       <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
       <div class="mb-3 mt-3">
         <label for="username" class="form-label">Username:</label>
@@ -24,6 +24,9 @@
           </label>
         </div> -->
       <button id="btn-login" class="btn btn-primary">로그인</button>
+      <a th:href="@{/oauth2/authorization/kakao}">
+        <img src="/image/kakao_login_button.png" height="38px">
+      </a>
     </form>
   </div>
 
