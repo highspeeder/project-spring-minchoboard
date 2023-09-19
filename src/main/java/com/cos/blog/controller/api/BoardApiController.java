@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cos.blog.config.auth.PrincipalDetail;
 import com.cos.blog.model.Board;
+import com.cos.blog.model.Reply;
 import com.cos.blog.service.BoardService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,14 @@ public class BoardApiController {
     @PutMapping("/api/board/{id}")
     public ResponseEntity<Integer> update(@PathVariable int id, @RequestBody Board board) {
         boardService.boardUpdate(id, board);
+        return new ResponseEntity<>(1, HttpStatus.OK);
+    }
+
+    //댓글쓰기
+    @PostMapping(value = "/api/board/{boardId}/reply")
+    public ResponseEntity<Integer> replySave(@PathVariable int boardId, @RequestBody Reply reply, @AuthenticationPrincipal PrincipalDetail principal) {
+
+        boardService.replyWrite(principal.getUser(), boardId, reply);
         return new ResponseEntity<>(1, HttpStatus.OK);
     }
 }

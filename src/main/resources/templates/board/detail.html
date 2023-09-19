@@ -31,22 +31,36 @@
         </div>
         <hr />
         <div class="card" style="background-color: #1AAFBC;">
-            <div class="card-body"><textarea class="form-control" rows="1"></textarea></div>
-            <div class="card-footer"><button class="btn btn-primary">등록</button></div>
+            <form>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <input type="hidden" id="boardId" th:value="${board.id}" />
+                <div class="card-body">
+                    <textarea id="reply-content" class="form-control" rows="1"></textarea>
+                </div>
+                <div class="card-footer">
+                    <button id="btn-reply-save" type="button" class="btn btn-primary">등록</button>
+                </div>
+            </form>
         </div>
         <div class="card mt-2" style="background-color: #1AAFBC;">
             <div class="card-header text-white">댓글 리스트</div>
-            <ul id="reply--box" class="list-group border-0 text-white" th:each="reply : ${board.replies}">
-                <li id="reply--1" class="list-group-item reply d-flex justify-content-between">
-                    <div th:text="${reply.content}">댓글 내용!!</div>
-                    <div class="d-flex ">
-                        <div class="fst-italic" th:text="'작성자: ' + ${reply.user.username} + '&nbsp;'">작성자: aaa &nbsp;</div>
+            <div id="reply--box" class="list-group border-0 text-white" th:each="reply : ${board.replies}">
+                <div id="reply--1" class="reply container mt-1">
+                    <div class="d-flex justify-content-between">
+                        <span class="fst-italic" th:text="${reply.user.username} + '&nbsp;'" style="font-size: 13px;">aaa &nbsp;</span>
                         <button class="badge btn btn-danger">삭제</button>
                     </div>
-                </li>
-            </ul>
+                    <div>
+                        <span th:text="${reply.content}" style="font-size: 16px;">댓글 내용!!</span>
+                    </div>
+                    <div>
+                        <span th:text="${#dates.format(reply.createDate, 'yyyy-MM-dd HH:mm:ss')}"  style="font-size: 13px;">1111.22.12 12:33:33</span>
+                    </div>    
+                    <hr class="my-2">
+                </div>
+            </div>
         </div>
-
+        <!-- th:text="${reply.createDate}" -->
     </div>
 
     <div th:replace=" ~{layout/footer :: footer}">

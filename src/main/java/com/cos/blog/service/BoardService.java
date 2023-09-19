@@ -7,13 +7,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cos.blog.model.Board;
+import com.cos.blog.model.Reply;
 import com.cos.blog.model.User;
 import com.cos.blog.repository.BoardRepository;
+import com.cos.blog.repository.ReplyRepository;
 
 @Service
 public class BoardService {
     @Autowired
     private BoardRepository boardRepository;
+
+    @Autowired
+    private ReplyRepository replyRepository;
 
     @Transactional
     public void write(Board board, User user) {
@@ -48,5 +53,18 @@ public class BoardService {
         });
         board.setTitle(requestBoard.getTitle());
         board.setContent(requestBoard.getContent());
+    }
+
+    @Transactional
+    public void replyWrite(User user, int boardId, Reply requestReply){
+        requestReply.setUser(user);
+
+        var board = boardRepository.findById(boardId).orElseThrow(() -> {
+            return new IllegalArgumentException("댓글의 게시글 찾기 실패");
+        });
+        requestReply.setBoard(board);
+
+        //아마도 영속성 컨텍스트에서 가져온 객체를 저장하는게 아니고, 다른 객체를 저장해주는 로직이라 save를 호출해야 함. 
+        replyRepository.save(requestReply);
     }
 }

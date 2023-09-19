@@ -11,6 +11,10 @@ let index = {
         $("#btn-update").on("click", () => { //function대신 ()=>를 사용하는 이유는 this를 바인딩하기 위해
             this.update();
         });
+
+        $("#btn-reply-save").on("click", () => { //function대신 ()=>를 사용하는 이유는 this를 바인딩하기 위해
+            this.replySave();
+        });
     },
 
     save: function () {
@@ -90,6 +94,33 @@ let index = {
         }).fail(function (error) {
             alert("글수정이 실패 하였습니다.");
             alert(error);
+        })
+    },
+
+    replySave: function () {
+        let data = {
+            content: $("#reply-content").val(),
+        }
+
+        let boardId = $("#boardId").val();
+
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+
+        $.ajax({
+            type: "POST",
+            url: `/api/board/${boardId}/reply`, // `는 작은 따옴표(')가 아니고 백틱(`)임 변수를 글자안에 넣기 위함.
+            data: JSON.stringify(data), //http body
+            contentType: "application/json; charest=utf-8", //MIME타입
+            beforeSend: function (xhr) {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+                xhr.setRequestHeader(header, token);
+            },
+        }).fail(function (error) {
+            alert("댓글쓰기가 실패 하였습니다.");
+            alert(error);
+        }).done(function (resp) {
+            alert("댓글쓰기가 완료 되었습니다.");
+            location.href = `/board/${boardId}`;
         })
     },
 }

@@ -16,6 +16,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderBy;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -54,5 +55,6 @@ public class Board {
 
     @OneToMany(mappedBy = "board") //mappedBy 연관관계의 주인이 아니다. FK가 아니다. DB에 컬럼 만들지 마라.
     @JsonIgnoreProperties({"board"})
+    @OrderBy("id desc")
     private List<Reply> replies;
 }
