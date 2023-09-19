@@ -26,20 +26,20 @@ public class BoardApiController {
     @PostMapping(value = "/api/board")
     public ResponseEntity<Integer> save(@RequestBody Board board, @AuthenticationPrincipal PrincipalDetail principal) {
         boardService.write(board, principal.getUser());
-        return new ResponseEntity<>(1, HttpStatus.OK); 
+        return new ResponseEntity<>(1, HttpStatus.OK);
     }
 
-    //글 삭제하기
+    // 글 삭제하기
     @DeleteMapping("/api/board/{id}")
     public ResponseEntity<Integer> deleteById(@PathVariable int id) {
         boardService.boardDelete(id);
-        return new ResponseEntity<>(1, HttpStatus.OK);      
+        return new ResponseEntity<>(1, HttpStatus.OK);
     }
 
-    //글 수정하기
+    // 글 수정하기
     @PutMapping("/api/board/{id}")
-    public ResponseEntity<Integer> update(@PathVariable int id, @RequestBody Board board){
+    public ResponseEntity<Integer> update(@PathVariable int id, @RequestBody Board board) {
         boardService.boardUpdate(id, board);
-        return new ResponseEntity<>(1, HttpStatus.OK); 
+        return new ResponseEntity<>(1, HttpStatus.OK);
     }
 }

@@ -19,9 +19,9 @@ public class LoginFailHandler extends SimpleUrlAuthenticationFailureHandler {
         String message = "로그인에 실패했습니다.";
         String encodeMessage = URLEncoder.encode(message, "UTF-8");
         String redirectUrl = "/user/loginForm?hasMessage=true&message=" + encodeMessage;
-        setDefaultFailureUrl(redirectUrl);
-
-        super.onAuthenticationFailure(request, response, exception);
+        response.sendRedirect(redirectUrl);
+        // setDefaultFailureUrl(redirectUrl);
+        // super.onAuthenticationFailure(request, response, exception);
     }
 
     // private static String getMessage(AuthenticationException exception) throws UnsupportedEncodingException {

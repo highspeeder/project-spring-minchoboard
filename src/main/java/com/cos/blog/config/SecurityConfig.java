@@ -50,6 +50,7 @@ public class SecurityConfig {
                         // 위에 요청이 아닌 다른 모든 요청은 인증이 되어야 통과할 수 있다.
                         .anyRequest().authenticated())
                 .oauth2Login(o -> o
+                    .loginPage("/user/loginForm")
                     .defaultSuccessUrl("/")
                     .userInfoEndpoint(userInfo -> userInfo
 			            .userService(this.oAuth2UserService)

@@ -18,8 +18,8 @@
         <label for="password" class="form-label text-white">Password:</label>
         <input type="password" class="form-control" id="password" placeholder="Enter password" name="password">
       </div>
-      <div class="message" th:if="${hasMessage == true}" th:text="${message}"
-        style="color: orangered; margin-bottom: 10px; background-color: gainsboro;">
+      <div class="message" th:if="${hasMessage} " th:text="${message}"
+        style="color: orangered; margin-bottom: 10px; background-color: gainsboro; padding: 5px; border-radius: 5px;">
       </div>
       <button id="btn-login" class="btn btn-primary">로그인</button>
       <a th:href="@{/oauth2/authorization/kakao}">
@@ -29,6 +29,28 @@
   </div>
 
   <div th:replace="~{layout/footer :: footer}"></div>
+
+  <script>
+    (function () {
+      'use strict'
+
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.querySelectorAll('.needs-validation')
+
+      // Loop over them and prevent submission
+      Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+          form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+              event.preventDefault()
+              event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+          }, false)
+        })
+    })()
+  </script>
 </body>
 
 </html>

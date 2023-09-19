@@ -10,11 +10,12 @@
         <!-- 로그인할 때, csrf토큰을 같이 날려준다. -->
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
         <button class="btn btn-secondary" onclick="history.back()">돌아가기</button>
-        <a class="btn btn-warning" th:if="${#authentication.principal.id == board.user.id}" 
+        <a class="btn btn-warning" th:if="${#authentication.principal.id == board.user.id}"
             th:href="@{/board/{id}/updateform(id=${board.id})}">
             수정
         </a>
-        <button id="btn-delete" class="btn btn-danger" th:if="${#authentication.principal.id == board.user.id}">삭제</button>
+        <button id="btn-delete" class="btn btn-danger"
+            th:if="${#authentication.principal.id == board.user.id}">삭제</button>
         <br /><br />
         <div>
             글 번호: <span id="id"><i th:text="${board.id}"></i></span>
@@ -29,9 +30,27 @@
             <div th:utext="${board.content}"></div>
         </div>
         <hr />
+        <div class="card" style="background-color: #1AAFBC;">
+            <div class="card-body"><textarea class="form-control" rows="1"></textarea></div>
+            <div class="card-footer"><button class="btn btn-primary">등록</button></div>
+        </div>
+        <div class="card mt-2" style="background-color: #1AAFBC;">
+            <div class="card-header text-white">댓글 리스트</div>
+            <ul id="reply--box" class="list-group border-0 text-white" th:each="reply : ${board.replies}">
+                <li id="reply--1" class="list-group-item reply d-flex justify-content-between">
+                    <div th:text="${reply.content}">댓글 내용!!</div>
+                    <div class="d-flex ">
+                        <div class="fst-italic" th:text="'작성자: ' + ${reply.user.username} + '&nbsp;'">작성자: aaa &nbsp;</div>
+                        <button class="badge btn btn-danger">삭제</button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
     </div>
 
-    <div th:replace="~{layout/footer :: footer}"></div>
+    <div th:replace=" ~{layout/footer :: footer}">
+    </div>
 
     <script src="/js/board.js"></script>
 </body>
