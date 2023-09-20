@@ -52,6 +52,7 @@ public class BoardApiController {
         return new ResponseEntity<>(1, HttpStatus.OK);
     }
 
+    //댓글 삭제
     @DeleteMapping(value = "/api/board/{boardId}/reply/{replyId}")
     public ResponseEntity<Integer> replyDelete(@PathVariable int replyId){
         boardService.replyDelete(replyId);
