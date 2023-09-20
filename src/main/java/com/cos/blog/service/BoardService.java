@@ -62,21 +62,24 @@ public class BoardService {
 
     @Transactional
     public void replyWrite(ReplySaveRequestDto replySaveDto) {
-        var user = userRepository.findById(replySaveDto.getUserId()).orElseThrow(() -> {
-            return new IllegalArgumentException("댓글의 유저 찾기 실패");
-        });
+        // //직접 영속화하여 집어넣기
+        // var user = userRepository.findById(replySaveDto.getUserId()).orElseThrow(() -> {
+        //     return new IllegalArgumentException("댓글의 유저 찾기 실패");
+        // });
 
-        var board = boardRepository.findById(replySaveDto.getBoardId()).orElseThrow(() -> {
-            return new IllegalArgumentException("댓글의 게시글 찾기 실패");
-        });
+        // var board = boardRepository.findById(replySaveDto.getBoardId()).orElseThrow(() -> {
+        //     return new IllegalArgumentException("댓글의 게시글 찾기 실패");
+        // });
 
-        Reply reply = Reply.builder()
-                            .user(user)
-                            .board(board)
-                            .content(replySaveDto.getContent())
-                            .build();
+        // Reply reply = Reply.builder()
+        //                     .user(user)
+        //                     .board(board)
+        //                     .content(replySaveDto.getContent())
+        //                     .build();
 
-        // 아마도 영속성 컨텍스트에서 가져온 객체 자체를 가지고 저장하는게 아니고, 다른 객체를 저장해주는 로직이라 save를 호출해야 함.
-        replyRepository.save(reply);
+        // // 아마도 영속성 컨텍스트에서 가져온 객체 자체를 가지고 저장하는게 아니고, 다른 객체를 저장해주는 로직이라 save를 호출해야 함.
+        // replyRepository.save(reply);
+
+        replyRepository.replySave(replySaveDto.getUserId(), replySaveDto.getBoardId(), replySaveDto.getContent());
     }
 }
