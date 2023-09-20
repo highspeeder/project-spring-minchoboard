@@ -42,11 +42,14 @@
         </div>
         <div class="card mt-2" style="background-color: #1AAFBC;">
             <div class="card-header text-white">댓글 리스트</div>
-            <div id="reply--box" class="list-group border-0 text-white" th:each="reply : ${board.replies}">
-                <div id="reply--1" class="reply container mt-1">
+            <div id="reply-box" class="list-group border-0 text-white" th:each="reply : ${board.replies}">
+                <div id="reply-${reply.id}" class="reply container mt-1">
                     <div class="d-flex justify-content-between">
                         <span class="fst-italic" th:text="${reply.user.username} + '&nbsp;'" style="font-size: 13px;">aaa &nbsp;</span>
-                        <button class="badge btn btn-danger">삭제</button>
+                        <button class="badge btn btn-danger" th:onclick="|index.replyDelete(${board.id}, ${reply.id})|"
+                                th:if="${#authentication.principal.id == reply.user.id}">
+                                삭제
+                        </button>
                     </div>
                     <div>
                         <span th:text="${reply.content}" style="font-size: 16px;">댓글 내용!!</span>

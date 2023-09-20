@@ -83,4 +83,9 @@ public class BoardService {
         //replyRepository에 메서드만들어서 사용하기
         replyRepository.replySave(replySaveDto.getUserId(), replySaveDto.getBoardId(), replySaveDto.getContent());
     }
+
+    @Transactional
+    public void replyDelete(int replyId){
+        replyRepository.deleteById(replyId);
+    }
 }

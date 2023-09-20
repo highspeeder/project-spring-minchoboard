@@ -123,6 +123,25 @@ let index = {
             location.href = `/board/${data.boardId}`;
         })
     },
+
+    replyDelete: function (boardId, replyId) {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+
+        $.ajax({
+            type: "DELETE",
+            url: `/api/board/${boardId}/reply/${replyId}`, // `는 작은 따옴표(')가 아니고 백틱(`)임 변수를 글자안에 넣기 위함.
+            beforeSend: function (xhr) {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+                xhr.setRequestHeader(header, token);
+            },
+        }).done(function (resp) {
+            alert("댓글삭제가 성공 하였습니다.");
+            location.href = `/board/${boardId}`;
+        }).fail(function (error) {
+            alert("댓글삭제가 실패 하였습니다.");
+            alert(error.responseText);
+        })
+    },
 }
 
 index.init();

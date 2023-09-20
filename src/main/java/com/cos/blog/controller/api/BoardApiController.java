@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cos.blog.config.auth.PrincipalDetail;
 import com.cos.blog.dto.ReplySaveRequestDto;
 import com.cos.blog.model.Board;
-import com.cos.blog.model.Reply;
 import com.cos.blog.service.BoardService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +49,12 @@ public class BoardApiController {
     @PostMapping(value = "/api/board/{boardId}/reply")
     public ResponseEntity<Integer> replySave(@RequestBody ReplySaveRequestDto replySaveDto) {
         boardService.replyWrite(replySaveDto);
+        return new ResponseEntity<>(1, HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/api/board/{boardId}/reply/{replyId}")
+    public ResponseEntity<Integer> replyDelete(@PathVariable int replyId){
+        boardService.replyDelete(replyId);
         return new ResponseEntity<>(1, HttpStatus.OK);
     }
 }
