@@ -99,17 +99,17 @@ let index = {
 
     replySave: function () {
         let data = {
+            userId: $("#userId").val(),
+            boardId: $("#boardId").val(),
             content: $("#reply-content").val(),
         }
-
-        let boardId = $("#boardId").val();
 
         var token = $("meta[name='_csrf']").attr("content");
         var header = $("meta[name='_csrf_header']").attr("content");
 
         $.ajax({
             type: "POST",
-            url: `/api/board/${boardId}/reply`, // `는 작은 따옴표(')가 아니고 백틱(`)임 변수를 글자안에 넣기 위함.
+            url: `/api/board/${data.boardId}/reply`, // `는 작은 따옴표(')가 아니고 백틱(`)임 변수를 글자안에 넣기 위함.
             data: JSON.stringify(data), //http body
             contentType: "application/json; charest=utf-8", //MIME타입
             beforeSend: function (xhr) {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
@@ -117,10 +117,9 @@ let index = {
             },
         }).fail(function (error) {
             alert("댓글쓰기가 실패 하였습니다.");
-            alert(error);
         }).done(function (resp) {
             alert("댓글쓰기가 완료 되었습니다.");
-            location.href = `/board/${boardId}`;
+            location.href = `/board/${data.boardId}`;
         })
     },
 }

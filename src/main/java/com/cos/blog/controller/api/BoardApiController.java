@@ -3,6 +3,7 @@ package com.cos.blog.controller.api;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cos.blog.config.auth.PrincipalDetail;
+import com.cos.blog.dto.ReplySaveRequestDto;
 import com.cos.blog.model.Board;
 import com.cos.blog.model.Reply;
 import com.cos.blog.service.BoardService;
@@ -45,10 +46,10 @@ public class BoardApiController {
     }
 
     //댓글쓰기
+    //데이터를 받을 때 컨트롤러에서 dto를 만들어서 받는게 좋다.
     @PostMapping(value = "/api/board/{boardId}/reply")
-    public ResponseEntity<Integer> replySave(@PathVariable int boardId, @RequestBody Reply reply, @AuthenticationPrincipal PrincipalDetail principal) {
-
-        boardService.replyWrite(principal.getUser(), boardId, reply);
+    public ResponseEntity<Integer> replySave(@RequestBody ReplySaveRequestDto replySaveDto) {
+        boardService.replyWrite(replySaveDto);
         return new ResponseEntity<>(1, HttpStatus.OK);
     }
 }

@@ -12,7 +12,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com.cos.blog.handler.LoginFailHandler;
 import com.cos.blog.service.OAuth2UserService;
 
 @Configuration // IoC

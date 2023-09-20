@@ -6,11 +6,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cos.blog.dto.ReplySaveRequestDto;
 import com.cos.blog.model.Board;
 import com.cos.blog.model.Reply;
 import com.cos.blog.model.User;
 import com.cos.blog.repository.BoardRepository;
 import com.cos.blog.repository.ReplyRepository;
+import com.cos.blog.repository.UserRepository;
 
 @Service
 public class BoardService {
@@ -19,6 +21,9 @@ public class BoardService {
 
     @Autowired
     private ReplyRepository replyRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Transactional
     public void write(Board board, User user) {
@@ -56,15 +61,22 @@ public class BoardService {
     }
 
     @Transactional
-    public void replyWrite(User user, int boardId, Reply requestReply){
-        requestReply.setUser(user);
+    public void replyWrite(ReplySaveRequestDto replySaveDto) {
+        var user = userRepository.findById(replySaveDto.getUserId()).orElseThrow(() -> {
+            return new IllegalArgumentException("댓글의 유저 찾기 실패");
+        });
 
-        var board = boardRepository.findById(boardId).orElseThrow(() -> {
+        var board = boardRepository.findById(replySaveDto.getBoardId()).orElseThrow(() -> {
             return new IllegalArgumentException("댓글의 게시글 찾기 실패");
         });
-        requestReply.setBoard(board);
 
-        //아마도 영속성 컨텍스트에서 가져온 객체를 저장하는게 아니고, 다른 객체를 저장해주는 로직이라 save를 호출해야 함. 
-        replyRepository.save(requestReply);
+        Reply reply = Reply.builder()
+                            .user(user)
+                            .board(board)
+                            .content(replySaveDto.getContent())
+                            .build();
+
+        // 아마도 영속성 컨텍스트에서 가져온 객체 자체를 가지고 저장하는게 아니고, 다른 객체를 저장해주는 로직이라 save를 호출해야 함.
+        replyRepository.save(reply);
     }
 }
