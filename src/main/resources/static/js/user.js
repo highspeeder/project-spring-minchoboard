@@ -7,6 +7,10 @@ let index = {
         $("#btn-update").on("click", ()=>{ //function대신 ()=>를 사용하는 이유는 this를 바인딩하기 위해
             this.update();
         });
+
+        $("#btn-login").on("click", ()=>{ //function대신 ()=>를 사용하는 이유는 this를 바인딩하기 위해
+            this.login();
+        });
     },
 
     save: function () {
@@ -65,6 +69,35 @@ let index = {
         }).fail(function (error) {
             alert("수정이 실패하였습니다.");
             alert(error);
+        })
+    },
+
+    login: function () {
+        let data = {
+            username: $("#username").val(),
+            password: $("#password").val(),
+        }
+        
+        var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+
+        var requestBody = $.param(data); // 데이터 직렬화
+        
+        $.ajax({
+            type: "POST",
+            url: "/auth/loginProc",
+            data: requestBody,
+            // data: JSON.stringify(data), //json으로 변경
+            contentType: "application/x-www-form-urlencoded; charset=utf-8", //MIME타입
+            beforeSend : function(xhr)
+            {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+				xhr.setRequestHeader(header, token);
+            },
+        }).done(function (resp) {
+            alert("로그인이 완료 되었습니다.");
+            location.href = "/";
+        }).fail(function (error) {
+            alert("로그인을 실패하였습니다.");
         })
     },
 }

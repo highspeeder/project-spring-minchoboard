@@ -14,8 +14,8 @@
 
     <div class="container" style="height: 70vh;">
         <form>
-            <!-- 로그인할 때, csrf토큰을 같이 날려준다. -->
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <!-- form submit할 때, csrf토큰을 같이 날려준다. ajax방식이 아닌 form태그방식에서 작동
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"> -->
             <input type="hidden" id="id" th:value="${board.id}"/>
             <div class="mb-3 mt-3">
                 <input th:value="${board.title}" type="text" class="form-control" placeholder="Enter title" id="title">

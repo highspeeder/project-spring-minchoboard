@@ -50,7 +50,6 @@ public class SecurityConfig {
                         // 위에 요청이 아닌 다른 모든 요청은 인증이 되어야 통과할 수 있다.
                         .anyRequest().authenticated())
                 .oauth2Login(o -> o
-                    .loginPage("/user/loginForm")
                     .defaultSuccessUrl("/")
                     .userInfoEndpoint(userInfo -> userInfo
 			            .userService(this.oAuth2UserService)
@@ -63,8 +62,11 @@ public class SecurityConfig {
                         // 스프링 시큐리티가 해당 url로 요청오는 로그인을 가로채서 대신 로그인 해준다.
                         .loginProcessingUrl("/auth/loginProc")
                         // 정상적으로 로그인이 되면 해당 url로 이동
-                        .defaultSuccessUrl("/")
-                        .failureHandler(new LoginFailHandler()))
+                        //.defaultSuccessUrl("/")
+                        //로그인 실패시 리다이렉션(세션과 컨텍스트 유지)
+                        .failureForwardUrl("/user/loginForm"))
+                        //로그인 실패시 핸들러
+                        //.failureHandler(new LoginFailHandler()))
                 // csrf토큰을 사용하지 않으면 기본적으로 /logout url으로 로그아웃이 되지만
                 // csrf토큰을 사용한다면 아래와 같이 설정을 해준다.
                 .logout((logout) -> logout
