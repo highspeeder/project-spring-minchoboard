@@ -38,7 +38,7 @@ let index = {
             location.href = "/";
         }).fail(function (error) {
             alert("회원가입을 실패하였습니다.");
-            alert(error);
+            alert(error.responseText);
         })
     },
 
@@ -68,7 +68,7 @@ let index = {
             location.href = "/";
         }).fail(function (error) {
             alert("수정이 실패하였습니다.");
-            alert(error);
+            alert(error.responseText);
         })
     },
 
@@ -98,6 +98,7 @@ let index = {
             location.href = "/";
         }).fail(function (error) {
             alert("로그인을 실패하였습니다.");
+            alert(error.responseText);
         })
     },
 }

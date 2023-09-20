@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -53,7 +54,9 @@ public class Board {
     @JoinColumn(name = "userId")
     private User user; //DB에서는 FK를 사용하지만, 자바는 객체를 사용한다.
 
-    @OneToMany(mappedBy = "board") //mappedBy 연관관계의 주인이 아니다. FK가 아니다. DB에 컬럼 만들지 마라.
+    //mappedBy 연관관계의 주인이 아니다. FK가 아니다. DB에 컬럼 만들지 마라.
+    //cascade REMOVE - board행을 삭제할 때, 관련 Reply도 다 삭제한다.
+    @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE) 
     @JsonIgnoreProperties({"board"})
     @OrderBy("id desc")
     private List<Reply> replies;

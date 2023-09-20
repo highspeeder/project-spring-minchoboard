@@ -80,6 +80,7 @@ public class BoardService {
         // // 아마도 영속성 컨텍스트에서 가져온 객체 자체를 가지고 저장하는게 아니고, 다른 객체를 저장해주는 로직이라 save를 호출해야 함.
         // replyRepository.save(reply);
 
+        //replyRepository에 메서드만들어서 사용하기
         replyRepository.replySave(replySaveDto.getUserId(), replySaveDto.getBoardId(), replySaveDto.getContent());
     }
 }

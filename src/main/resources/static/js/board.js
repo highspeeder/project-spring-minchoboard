@@ -37,7 +37,7 @@ let index = {
             },
         }).fail(function (error) {
             alert("글쓰기가 실패 하였습니다.");
-            alert(error);
+            alert(error.responseText);
         }).done(function (resp) {
             alert("글쓰기가 완료 되었습니다.");
             location.href = "/";
@@ -60,11 +60,11 @@ let index = {
                 xhr.setRequestHeader(header, token);
             },
         }).done(function (resp) {
-            alert("삭제가 완료 되었습니다.");
+            alert("글 삭제가 완료 되었습니다.");
             location.href = "/";
         }).fail(function (error) {
-            alert("삭제가 실패 하였습니다.");
-            alert(error);
+            alert("글 삭제가 실패 하였습니다.");
+            alert(error.responseText);
         })
     },
 
@@ -93,7 +93,7 @@ let index = {
             location.href = "/";
         }).fail(function (error) {
             alert("글수정이 실패 하였습니다.");
-            alert(error);
+            alert(error.responseText);
         })
     },
 
@@ -117,6 +117,7 @@ let index = {
             },
         }).fail(function (error) {
             alert("댓글쓰기가 실패 하였습니다.");
+            alert(error.responseText);
         }).done(function (resp) {
             alert("댓글쓰기가 완료 되었습니다.");
             location.href = `/board/${data.boardId}`;
