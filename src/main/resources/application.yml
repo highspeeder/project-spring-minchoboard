@@ -7,7 +7,7 @@ server:
       enabled: true
       force: true
 
-spring:   
+spring:
   security:
     oauth2:
       client:
@@ -26,15 +26,17 @@ spring:
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
   datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/blog?serverTimezone=Asia/Seoul
+    # driver-class-name: org.postgresql.Driver
+    # url: jdbc:postgresql://localhost:5432/blog?serverTimezone=Asia/Seoul
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/blog
     username: ${blogdbid}
     password: ${blogdbpassword}
-    
+
   jpa:
     open-in-view: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
