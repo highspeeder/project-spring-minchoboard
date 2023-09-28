@@ -17,7 +17,7 @@ spring:
             client-secret: ${kakao_client_secret}
             authorization-grant-type: authorization_code
             scope: profile_nickname, account_email
-            redirect-uri: http://localhost:8000/login/oauth2/code/kakao
+            redirect-uri: http://${blogdomain}/login/oauth2/code/kakao
             client-authentication-method: client_secret_post
         provider:
           kakao:
@@ -29,7 +29,7 @@ spring:
     # driver-class-name: org.postgresql.Driver
     # url: jdbc:postgresql://localhost:5432/blog?serverTimezone=Asia/Seoul
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/blog
+    url: jdbc:mysql://${blogip}:3306/blog
     username: ${blogdbid}
     password: ${blogdbpassword}
 
