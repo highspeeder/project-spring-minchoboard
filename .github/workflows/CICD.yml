@@ -38,3 +38,33 @@ jobs:
         with:
           name: artifact
           path: ./build/ # or path/to/artifact
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/download-artifact@v3
+        with:
+          name: artifact
+          path: ./build/
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: ./build/
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.KEY }}
+      - name: SCP transfer
+        run: scp *.jar ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/cicd
+      - name: Server Download
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd ~/compose-server/minchoboard/spring/source
+            sudo git pull
+            docker-compose stop
+            docker-compose up -d --build
