@@ -64,7 +64,7 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           source: "./build/libs/*.jar"
-          target: "~/compose-server/minchoboard/spring"
+          target: "/home/${{ secrets.USERNAME }}/compose-server/minchoboard/spring"
 
       - name: Server Up
         uses: appleboy/ssh-action@master
@@ -75,4 +75,4 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd ~/compose-server/minchoboard/spring
-            docker-compose up -d
+            docker-compose up -d --build
