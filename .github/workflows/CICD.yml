@@ -75,4 +75,4 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd ~/compose-server/minchoboard/spring
-            docker-compose up -d --build
+            docker-compose up -d
