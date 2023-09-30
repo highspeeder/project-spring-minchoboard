@@ -52,10 +52,7 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            env
             cd ~/compose-server/minchoboard/spring
-            docker-compose stop
-            docker-compose rm -f
 
       - name: copy file via ssh key
         uses: appleboy/scp-action@master
@@ -75,6 +72,10 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           script: |
+            env
             source ~/.bashrc
+            env
             cd ~/compose-server/minchoboard/spring
+            docker-compose stop
             docker-compose up -d --build
+            docker image prune
