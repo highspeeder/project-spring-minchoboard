@@ -44,16 +44,6 @@ jobs:
         run: ls -R
         working-directory: ./build/
 
-      - name: Docker Stop Before Downloading
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
-          port: ${{ secrets.PORT }}
-          script: |
-            cd ~/compose-server/minchoboard/spring
-
       - name: copy file via ssh key
         uses: appleboy/scp-action@master
         with:
