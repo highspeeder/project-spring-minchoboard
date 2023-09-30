@@ -53,32 +53,20 @@ jobs:
           port: ${{ secrets.PORT }}
           source: "./build/libs/*.jar"
           target: "/home/${{ secrets.USERNAME }}/compose-server/minchoboard/spring"
-          
-      - name: Server Up
-        uses: appleboy/ssh-action@master
-        env:
-          BLOGIP: ${{ secrets.BLOGIP }}
-          BLOGDBPASSWORD: ${{ secrets.BLOGDBPASSWORD }}
-          BLOGDBID: ${{ secrets.BLOGDBID }}
-          BLOGDOMAIN: ${{ secrets.BLOGDOMAIN }}
-          KAKAO_CLIENT_ID: ${{ secrets.KAKAO_CLIENT_ID }}
-          KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.8.0
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
-          port: ${{ secrets.PORT }}
-          envs: BLOGIP, BLOGDBPASSWORD, BLOGDBID, BLOGDOMAIN, KAKAO_CLIENT_ID, KAKAO_CLIENT_SECRET
-          script: |
-            export BLOGIP=$BLOGIP
-            export BLOGDBPASSWORD=$BLOGDBPASSWORD
-            export BLOGDBID=$BLOGDBID
-            export BLOGDOMAIN=$BLOGDOMAIN
-            export KAKAO_CLIENT_ID=$KAKAO_CLIENT_ID
-            export KAKAO_CLIENT_SECRET=$KAKAO_CLIENT_SECRET
-            env
-            #source ~/.bashrc
-            cd ~/compose-server/minchoboard/spring
-            docker-compose stop
-            docker-compose up -d --build
-            docker image prune
+          ssh-private-key: ${{ secrets.KEY }}
+          
+      - name: Add remote server to known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan ${{ secrets.HOST }} >> ~/.ssh/known_hosts
+          
+      - name: Execute remote commands
+        run: |
+          ssh -v ${{ secrets.USERNAME }}@${{ secrets.HOST }} "cd ~/compose-server/minchoboard/spring"
+          ssh -v ${{ secrets.USERNAME }}@${{ secrets.HOST }} "docker-compose stop"
+          ssh -v ${{ secrets.USERNAME }}@${{ secrets.HOST }} "docker-compose up -d --build"
+          ssh -v ${{ secrets.USERNAME }}@${{ secrets.HOST }} "docker image prune"
