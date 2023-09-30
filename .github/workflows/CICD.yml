@@ -72,6 +72,7 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           script: |
+            /bin/bash
             env
             source ~/.bashrc
             env
