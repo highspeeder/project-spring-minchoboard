@@ -52,6 +52,7 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           script: |
+            env
             cd ~/compose-server/minchoboard/spring
             docker-compose stop
             docker-compose rm -f
