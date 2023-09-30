@@ -56,14 +56,29 @@ jobs:
 
       - name: Server Up
         uses: appleboy/ssh-action@master
+        env:
+          BLOGIP: ${{ secrets.BLOGIP }}
+          BLOGDBPASSWORD: ${{ secrets.BLOGDBPASSWORD }}
+          BLOGDBID: ${{ secrets.BLOGDBID }}
+          BLOGDOMAIN: ${{ secrets.BLOGDOMAIN }}
+          KAKAO_CLIENT_ID: ${{ secrets.KAKAO_CLIENT_ID }}
+          KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
+          envs: BLOGIP, BLOGDBPASSWORD, BLOGDBID, BLOGDOMAIN, KAKAO_CLIENT_ID, KAKAO_CLIENT_SECRET
           script: |
-            source ~/.bashrc
-            env
+            #putty로 접속시 서버에 있는 환경변수가 잘 적용이 되지만, 
+            #github action사용시 서버에 있는 환경변수가 적용이 안되서 spring boot 프로젝트를 실행하면 에러가 난다.
+            #그래서 github action에서 환경변수를 생성하고, 서버에 접속후 export를 해준다.
+            export blogip=$BLOGIP
+            export blogdbpassword=$BLOGDBPASSWORD
+            export blogdbid=$BLOGDBID
+            export blogdomain=$BLOGDOMAIN
+            export kakao_client_id=$KAKAO_CLIENT_ID
+            export kakao_client_secret=$KAKAO_CLIENT_SECRET
             cd ~/compose-server/minchoboard/spring
             docker-compose stop
             docker-compose up -d --build
