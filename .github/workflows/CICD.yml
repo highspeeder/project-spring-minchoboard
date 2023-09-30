@@ -56,19 +56,11 @@ jobs:
 
       - name: Server Up
         uses: appleboy/ssh-action@master
-        env:
-          BLOGIP: ${{ secrets.BLOGIP }}
-          BLOGDBPASSWORD: ${{ secrets.BLOGDBPASSWORD }}
-          BLOGDBID: ${{ secrets.BLOGDBID }}
-          BLOGDOMAIN: ${{ secrets.BLOGDOMAIN }}
-          KAKAO_CLIENT_ID: ${{ secrets.KAKAO_CLIENT_ID }}
-          KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
-          envs: BLOGIP, BLOGDBPASSWORD, BLOGDBID, BLOGDOMAIN, KAKAO_CLIENT_ID, KAKAO_CLIENT_SECRET
           script: |
             source ~/.bashrc
             env
