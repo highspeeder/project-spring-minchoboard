@@ -82,4 +82,4 @@ jobs:
             cd ~/compose-server/minchoboard/spring
             docker-compose stop
             docker-compose up -d --build
-            docker image prune
+            docker image prune -f
