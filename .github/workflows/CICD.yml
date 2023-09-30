@@ -66,13 +66,18 @@ jobs:
           
       - name: Server Up
         uses: appleboy/ssh-action@master
+        env:
+          FOO: "BAR"
+          HOST: ${{ secrets.HOST }}
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
+          envs: FOO,HOST
           script: |
-            /bin/bash
+            echo "foo is $FOO"
+            echo "host is $HOST"
             env
             source ~/.bashrc
             env
