@@ -70,12 +70,12 @@ jobs:
           port: ${{ secrets.PORT }}
           envs: BLOGIP, BLOGDBPASSWORD, BLOGDBID, BLOGDOMAIN, KAKAO_CLIENT_ID, KAKAO_CLIENT_SECRET
           script: |
-            export BLOGIP=$BLOGIP
-            export BLOGDBPASSWORD=$BLOGDBPASSWORD
-            export BLOGDBID=$BLOGDBID
-            export BLOGDOMAIN=$BLOGDOMAIN
-            export KAKAO_CLIENT_ID=$KAKAO_CLIENT_ID
-            export KAKAO_CLIENT_SECRET=$KAKAO_CLIENT_SECRET
+            export blogip=$BLOGIP
+            export blogdbpassword=$BLOGDBPASSWORD
+            export blogdbid=$BLOGDBID
+            export blogdomain=$BLOGDOMAIN
+            export kakao_client_id=$KAKAO_CLIENT_ID
+            export kakao_client_secret=$KAKAO_CLIENT_SECRET
             env
             #source ~/.bashrc
             cd ~/compose-server/minchoboard/spring
