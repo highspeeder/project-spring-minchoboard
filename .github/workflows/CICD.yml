@@ -82,5 +82,11 @@ jobs:
           port: ${{ secrets.PORT }}
           envs: blogip,blogdomain,blogdbpassword,blogdbid,kakao_client_id,kakao_client_secret
           script: |
+            export blogip=$blogip
+            export blogdomain=$blogdomain
+            export blogdbpassword=$blogdbpassword
+            export blogdbid=$blogdbid
+            export kakao_client_id=$kakao_client_id
+            export kakao_client_secret=$kakao_client_secret
             cd ~/compose-server/minchoboard/spring
             docker-compose up -d --build
