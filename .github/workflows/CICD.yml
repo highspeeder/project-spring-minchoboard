@@ -78,9 +78,10 @@ jobs:
           script: |
             echo "foo is $FOO"
             echo "host is $HOST"
+            export FOO=$FOO
+            export HOST=$HOST
             env
-            source ~/.bashrc
-            env
+            #source ~/.bashrc
             cd ~/compose-server/minchoboard/spring
             docker-compose stop
             docker-compose up -d --build
