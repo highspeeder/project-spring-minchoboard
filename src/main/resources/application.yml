@@ -29,7 +29,7 @@ spring:
     # driver-class-name: org.postgresql.Driver
     # url: jdbc:postgresql://localhost:5432/blog?serverTimezone=Asia/Seoul
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${blogip}:3306/blog
+    url: jdbc:mysql://${blogip}:3306/blog?useSSL=false
     username: ${blogdbid}
     password: ${blogdbpassword}
 
